@@ -51,16 +51,19 @@
               imageData.data[i+2]=255-imageData.data[i+2];
               imageData.data[i+3]=255;
             }*/
+            canvas.width  = target.width;
+            canvas.height = target.height;
+            var target.data = context.getImageData(0,0,target.width,target.height);
             var scale = 0.5;
             for (var y = 0; y < target.height; y++) {
                 for (var x = 0; x < target.width; x += 4) {
                     var xp = parseInt(Math.round(x / scale));
                     var yp = parseInt(Math.round(y / scale));
                     if (xp < target.width && yp < target.height) {
-                        target.data[y * target.width + x]     = imageData[yp * imageObj.width + xp];     //red
-                        target.data[y * target.width + x + 1] = imageData[yp * imageObj.width + xp + 1]; //green
-                        target.data[y * target.width + x + 2] = imageData[yp * imageObj.width + xp + 2]; //blue
-                        target.data[y * target.width + x + 3] = imageData[yp * imageObj.width + xp + 3]; //alpha
+                        target.data.data[y * target.width + x]     = imageData[yp * imageObj.width + xp];     //red
+                        target.data.data[y * target.width + x + 1] = imageData[yp * imageObj.width + xp + 1]; //green
+                        target.data.data[y * target.width + x + 2] = imageData[yp * imageObj.width + xp + 2]; //blue
+                        target.data.data[y * target.width + x + 3] = imageData[yp * imageObj.width + xp + 3]; //alpha
                     }
                 }
             }

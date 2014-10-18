@@ -31,8 +31,17 @@
               canvas.width  = imageObj.width;
               canvas.height = imageObj.height;
               context.drawImage(imageObj, 0, 0);
-              console.log(context.getImageData(0,0,imageObj.width,imageObj.height));
+              var imgData = context.getImageData(0,0,imageObj.width,imageObj.height);
               canvas.style.display = "none";
+              // invert colors
+              for (var i=0;i<imgData.data.length;i+=4){
+                imgData.data[i]=255-imgData.data[i];
+                imgData.data[i+1]=255-imgData.data[i+1];
+                imgData.data[i+2]=255-imgData.data[i+2];
+                imgData.data[i+3]=255;
+              }
+              context.putImageData(imgData,0,0);
+              canvas.style.display = "block";
           };
           var isValidUrl = function(url) {
             var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol

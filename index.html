@@ -39,6 +39,7 @@
             canvas.width  = originImage.width;
             canvas.height = originImage.height;
             context.drawImage(originImage, 0, 0);
+            try{
               var imageData = context.getImageData(0,0,originImage.width,originImage.height);
               canvas.style.display = "none";
               //calculate scale

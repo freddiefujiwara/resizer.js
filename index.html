@@ -1,6 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+<!DOCTYPE>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <title>resizer.js</title>
@@ -41,7 +39,6 @@
             canvas.width  = originImage.width;
             canvas.height = originImage.height;
             context.drawImage(originImage, 0, 0);
-            try{
               var imageData = context.getImageData(0,0,originImage.width,originImage.height);
               canvas.style.display = "none";
               //calculate scale

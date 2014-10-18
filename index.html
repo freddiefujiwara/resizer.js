@@ -32,6 +32,7 @@
               canvas.height = imageObj.height;
               context.drawImage(imageObj, 0, 0);
               console.log(context.getImageData(0,0,imageObj.width,imageObj.height));
+              canvas.style.display = "none";
           };
           var isValidUrl = function(url) {
             var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol

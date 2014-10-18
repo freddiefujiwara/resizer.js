@@ -31,7 +31,6 @@
         var target  = {
             width  : 230,
             height : 230,
-            data   : new Array(230*230)
         };
         var canvas = document.getElementById('mycanvas');
         var context = canvas.getContext('2d');
@@ -43,11 +42,11 @@
             context.drawImage(imageObj, 0, 0);
             var imageData = context.getImageData(0,0,imageObj.width,imageObj.height);
             canvas.style.display = "none";
+            //resize
             canvas.width  = target.width;
             canvas.height = target.height;
-            //resize
             target.data = context.getImageData(0,0,target.width,target.height);
-            var scale = Math.max([target.width/imageObj.width,target.height/imageObj.height]);
+            var scale = Math.max(target.width/imageObj.width,target.height/imageObj.height);
             for (var y = 0; y < target.height; y++) {
                 for (var x = 0; x < target.width; x ++) {
                     var xp = parseInt(Math.round(x / scale));
@@ -60,7 +59,6 @@
                     }
                 }
             }
-            console.log(target.data);
             context.putImageData(target.data,0,0);
             canvas.style.display = "block";
         };

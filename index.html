@@ -26,8 +26,8 @@
     var context = canvas.getContext('2d');
     var imageObj = new Image();
     imageObj.onload = function() {
-        canvas.style.width  = imageObj.width;
-        canvas.style.height = imageObj.height;
+        context.canvas.style.width  = imageObj.width;
+        context.canvas.style.height = imageObj.height;
         context.drawImage(imageObj, 0, 0);
     };
     imageObj.src = 'https://avatars3.githubusercontent.com/u/16923';

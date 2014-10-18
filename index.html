@@ -32,7 +32,6 @@
             context.drawImage(imageObj, 0, 0);
         };
         var isValidUrl = function(url) {
-          return true;
           var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
           '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
           '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
@@ -41,8 +40,9 @@
           '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
           return !!pattern.test(url);
         };
-        imageObj.src = isValidUrl(window.location.hash) 
-            ? window.location.hash 
+        var hashUrl = window.location.hash.substr(1);
+        imageObj.src = isValidUrl(hashUrl) 
+            ? hashUrl 
             : 'https://avatars3.githubusercontent.com/u/16923';
 //    };
   </script>

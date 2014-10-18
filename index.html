@@ -41,38 +41,40 @@
             canvas.width  = originImage.width;
             canvas.height = originImage.height;
             context.drawImage(originImage, 0, 0);
-            var imageData = context.getImageData(0,0,originImage.width,originImage.height);
-            canvas.style.display = "none";
-            //calculate scale
-            var scale = Math.max(target.width/originImage.width,target.height/originImage.height);
-            canvas.width = target.width  = parseInt(originImage.width  * scale);
-            canvas.height= target.height = parseInt(originImage.height * scale);
-            //resize
-            target.data  = context.getImageData(0,0,target.width,target.height);
-            for (var yTarget = 0; yTarget < target.height; yTarget++) {
-                for (var xTarget = 0; xTarget < target.width; xTarget ++) {
-                    //calculate origin pixcel
-                    var xOrigin = parseInt(Math.round(xTarget / scale));
-                    var yOrigin = parseInt(Math.round(yTarget / scale));
-                    //convert origin to target
-                    if (xOrigin < originImage.width && yOrigin < originImage.height) {
-                        //red
-                        target.data.data[yTarget * target.width * 4 + xTarget * 4]     
-                            = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4];
-                        //green
-                        target.data.data[yTarget * target.width * 4 + xTarget * 4 + 1] 
-                            = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 1];
-                        //blue
-                        target.data.data[yTarget * target.width * 4 + xTarget * 4 + 2] 
-                            = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 2];
-                        //alpha
-                        target.data.data[yTarget * target.width * 4 + xTarget * 4 + 3] 
-                            = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 3];
-                    }
-                }
-            }
-            //display
-            context.putImageData(target.data,0,0);
+            try{
+              var imageData = context.getImageData(0,0,originImage.width,originImage.height);
+              canvas.style.display = "none";
+              //calculate scale
+              var scale = Math.max(target.width/originImage.width,target.height/originImage.height);
+              canvas.width = target.width  = parseInt(originImage.width  * scale);
+              canvas.height= target.height = parseInt(originImage.height * scale);
+              //resize
+              target.data  = context.getImageData(0,0,target.width,target.height);
+              for (var yTarget = 0; yTarget < target.height; yTarget++) {
+                  for (var xTarget = 0; xTarget < target.width; xTarget ++) {
+                      //calculate origin pixcel
+                      var xOrigin = parseInt(Math.round(xTarget / scale));
+                      var yOrigin = parseInt(Math.round(yTarget / scale));
+                      //convert origin to target
+                      if (xOrigin < originImage.width && yOrigin < originImage.height) {
+                          //red
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4]     
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4];
+                          //green
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4 + 1] 
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 1];
+                          //blue
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4 + 2] 
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 2];
+                          //alpha
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4 + 3] 
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 3];
+                      }
+                  }
+              }
+              //display
+              context.putImageData(target.data,0,0);
+            }catch(Exception e){}
             canvas.style.display = "block";
         };
         var isValidUrl = function(url) {

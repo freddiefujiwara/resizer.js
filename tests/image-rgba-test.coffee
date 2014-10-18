@@ -33,4 +33,26 @@ describe 'ImageRGBA', ->
           expect(@imageRGBA.initialize 1,2,[0x00,0x00,0x00,0xFF,0x00,0x00,0x00,0xFF])
               .to.be.a 'object'
 
-      describe 'GetPixcel', ->
+      describe 'Pixcel', ->
+        it 'should be an ImageRGBA method', ->
+          expect(@imageRGBA.pixcel).to.be.a 'function'
+
+        it 'should return [red,green,blue,alpha]', ->
+          @imageRGBA.initialize 1,2,[0x00,0x00,0x00,0xFF,0x01,0x01,0x01,0xFF]
+          expect(@imageRGBA.pixcel 0,0).to.deep.equal [0x00,0x00,0x00,0xFF]
+          expect(@imageRGBA.pixcel 0,1).to.deep.equal [0x01,0x01,0x01,0xFF]
+
+          expect(@imageRGBA.pixcel.bind(@imageRGBA,1,1))
+              .to.throw Error,/x and y should be in 1x2/
+
+        it 'should be set and return [red,green,blue,alpha]', ->
+          @imageRGBA.initialize 1,2,[0x00,0x00,0x00,0xFF,0x01,0x01,0x01,0xFF]
+          expect(@imageRGBA.pixcel 0,0,[0x02,0x02,0x02,0xFF]).to.deep.equal [0x02,0x02,0x02,0xFF]
+          expect(@imageRGBA.pixcel 0,0,).to.deep.equal [0x02,0x02,0x02,0xFF]
+          expect(@imageRGBA.pixcel 0,1).to.deep.equal [0x01,0x01,0x01,0xFF]
+          expect(@imageRGBA.data).to.deep.equal [0x02,0x02,0x02,0xFF,0x01,0x01,0x001,0xFF]
+
+          expect(@imageRGBA.pixcel.bind(@imageRGBA,0,0,1))
+              .to.throw Error,/data should be an Array/
+          expect(@imageRGBA.pixcel.bind(@imageRGBA,0,0,[0,0]))
+              .to.throw Error,/data should be an Array\(4\)/

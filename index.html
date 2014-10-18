@@ -14,7 +14,7 @@
   </style>
 </head>
 
-<body>
+<body onload="draw">
   <canvas id="mycanvas">
     <div id="fallback">
       You only see this message if your browser doesn't support
@@ -22,7 +22,6 @@
     </div>
   </canvas>
   <script>       
-//    window.document.onload = function(){
       var draw = function(){
           var canvas = document.getElementById('mycanvas');
           var context = canvas.getContext('2d');
@@ -46,9 +45,7 @@
               ? hashUrl 
               : 'https://avatars3.githubusercontent.com/u/16923';
       };
-      draw();
       document.onhashchange = draw;
-//    };
   </script>
 </body>
 </html>

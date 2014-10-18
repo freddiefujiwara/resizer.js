@@ -56,7 +56,7 @@
             target.data = context.getImageData(0,0,target.width,target.height);
             var scale = 0.5;
             for (var y = 0; y < target.height; y++) {
-                for (var x = 0; x < target.width; x += 4) {
+                for (var x = 0; x < target.width*4; x += 4) {
                     var xp = parseInt(Math.round(x / scale));
                     var yp = parseInt(Math.round(y / scale));
                     if (xp < target.width && yp < target.height) {

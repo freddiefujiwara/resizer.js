@@ -6,12 +6,20 @@
 </head>
 
 <body>
-  <img id="before" src="https://avatars3.githubusercontent.com/u/16923" name="before" />
   <canvas id="mycanvas">
     <div id="fallback">
       You only see this message if your browser doesn't support
       canvas.
     </div>
   </canvas>
+  <script>       
+    var canvas = document.getElementById('mycanvas');
+    var context = canvas.getContext('2d');
+    var imageObj = new Image();
+    imageObj.onload = function() {
+        context.drawImage(imageObj, 0, 0);
+    };
+    imageObj.src = 'https://avatars3.githubusercontent.com/u/16923';
+  </script>
 </body>
 </html>

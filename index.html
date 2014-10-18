@@ -26,6 +26,7 @@
           var canvas = document.getElementById('mycanvas');
           var context = canvas.getContext('2d');
           var imageObj = new Image();
+          imageObj.crossOrigin = "";
           imageObj.onload = function() {
               canvas.width  = imageObj.width;
               canvas.height = imageObj.height;

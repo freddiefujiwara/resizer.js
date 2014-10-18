@@ -61,9 +61,9 @@
           return !!pattern.test(url);
         };
         var hashData = window.location.hash.substr(1).split('#');
-        if(3 <= hashData){
-            target.width  = parseInt(hashData[2]);
-            target.height = parseInt(hashData[3]);
+        if(3 <= hashData.length){
+            target.width  = parseInt(hashData[1]);
+            target.height = parseInt(hashData[2]);
             console.log(target);
         }
         imageObj.src = isValidUrl(hashData[0]) 

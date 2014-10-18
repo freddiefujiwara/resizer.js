@@ -43,18 +43,11 @@
             context.drawImage(imageObj, 0, 0);
             var imageData = context.getImageData(0,0,imageObj.width,imageObj.height);
             canvas.style.display = "none";
-            // invert colors
-            /*
-            for (var i=0;i<imageData.data.length;i+=4){
-              imageData.data[i]=255-imageData.data[i];
-              imageData.data[i+1]=255-imageData.data[i+1];
-              imageData.data[i+2]=255-imageData.data[i+2];
-              imageData.data[i+3]=255;
-            }*/
             canvas.width  = target.width;
             canvas.height = target.height;
+            //resize
             target.data = context.getImageData(0,0,target.width,target.height);
-            var scale = 0.5;
+            var scale = Math.max([target.width/imageObj.width,target.height/imageObj.height]);
             for (var y = 0; y < target.height; y++) {
                 for (var x = 0; x < target.width; x ++) {
                     var xp = parseInt(Math.round(x / scale));

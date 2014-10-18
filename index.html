@@ -44,10 +44,8 @@
             canvas.style.display = "none";
             //resize
             var scale = Math.max(target.width/imageObj.width,target.height/imageObj.height);
-            target.width  = parseInt(target.width  * scale);
-            target.height = parseInt(target.height * scale);
-            canvas.width  = target.width;
-            canvas.height = target.height;
+            canvas.width = target.width  = parseInt(imageObj.width  * scale);
+            canvas.height= target.height = parseInt(imageObj.height * scale);
             target.data = context.getImageData(0,0,target.width,target.height);
             for (var y = 0; y < target.height; y++) {
                 for (var x = 0; x < target.width; x ++) {

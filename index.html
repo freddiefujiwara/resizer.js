@@ -56,14 +56,14 @@
             target.data = context.getImageData(0,0,target.width,target.height);
             var scale = 0.5;
             for (var y = 0; y < target.height; y++) {
-                for (var x = 0; x < target.width*4; x += 4) {
+                for (var x = 0; x < target.width; x ++) {
                     var xp = parseInt(Math.round(x / scale));
                     var yp = parseInt(Math.round(y / scale));
-                    if (xp < imageObj.width*4 && yp < imageObj.height) {
-                        target.data.data[y * target.width * 4 + x]     = imageData[yp * imageObj.width * 4 + xp];     //red
-                        target.data.data[y * target.width * 4 + x + 1] = imageData[yp * imageObj.width * 4 + xp + 1]; //green
-                        target.data.data[y * target.width * 4 + x + 2] = imageData[yp * imageObj.width * 4 + xp + 2]; //blue
-                        target.data.data[y * target.width * 4 + x + 3] = imageData[yp * imageObj.width * 4 + xp + 3]; //alpha
+                    if (xp < imageObj.width && yp < imageObj.height) {
+                        target.data.data[y * target.width * 4 + x * 4]     = imageData[yp * imageObj.width * 4 + xp * 4];     //red
+                        target.data.data[y * target.width * 4 + x * 4 + 1] = imageData[yp * imageObj.width * 4 + xp * 4 + 1]; //green
+                        target.data.data[y * target.width * 4 + x * 4 + 2] = imageData[yp * imageObj.width * 4 + xp * 4 + 2]; //blue
+                        target.data.data[y * target.width * 4 + x * 4 + 3] = imageData[yp * imageObj.width * 4 + xp * 4 + 3]; //alpha
                     }
                 }
             }

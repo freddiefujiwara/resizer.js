@@ -29,8 +29,9 @@
        
     var draw = function(){
         var target  = {
-            width  : 500,
-            height : 500
+            width  : 230,
+            height : 230,
+            data   ; new Buffer(230*230)
         };
         var canvas = document.getElementById('mycanvas');
         var context = canvas.getContext('2d');
@@ -43,13 +44,27 @@
             var imgData = context.getImageData(0,0,imageObj.width,imageObj.height);
             canvas.style.display = "none";
             // invert colors
+            /*
             for (var i=0;i<imgData.data.length;i+=4){
               imgData.data[i]=255-imgData.data[i];
               imgData.data[i+1]=255-imgData.data[i+1];
               imgData.data[i+2]=255-imgData.data[i+2];
               imgData.data[i+3]=255;
+            }*/
+            var scale = 0.5;
+            for (var y = 0; y < target.height; y++) {
+                for (var x = 0; x < target.width; x += 4) {
+                    var xp = parseInt(Math.round(x / scale));
+                    var yp = parseInt(Math.round(y / scale));
+                    if (xp < target.width && yp < target.height) {
+                        target.data[y * target.width + x]     = imageData[yp * imageObj.width + xp];     //red
+                        target.data[y * target.width + x + 1] = imageData[yp * imageObj.width + xp + 1]; //green
+                        target.data[y * target.width + x + 2] = imageData[yp * imageObj.width + xp + 2]; //blue
+                        target.data[y * target.width + x + 3] = imageData[yp * imageObj.width + xp + 3]; //alpha
+                    }
+                }
             }
-            context.putImageData(imgData,0,0);
+            context.putImageData(target.data,0,0);
             canvas.style.display = "block";
         };
         var isValidUrl = function(url) {
@@ -64,7 +79,6 @@
         if(3 <= hashData.length){
             target.width  = parseInt(hashData[1]);
             target.height = parseInt(hashData[2]);
-            console.log(target);
         }
         imageObj.src = isValidUrl(hashData[0]) 
             ? hashData[0]

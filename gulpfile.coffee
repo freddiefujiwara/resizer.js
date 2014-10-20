@@ -8,6 +8,7 @@ concat     = require 'gulp-concat'
 uglify     = require 'gulp-uglify'
 browserify = require 'browserify'
 source = require 'vinyl-source-stream'
+plumber    = require 'gulp-plumber'
 
 
 handleError = (err) ->
@@ -66,6 +67,7 @@ gulp.task 'compile-js', ->
 gulp.task 'compile-js', ->
   browserify
     entries: ['./js/resizer.js','./js/image-rgba.js']
+    standalone: 'noscope'
   .bundle()
   .pipe source 'resizer.min.js'
   .pipe gulp.dest "./js/"

@@ -1,4 +1,4 @@
-ImageRGBA = require '../js/image-rgba.js'
+ImageRGBA = require './image-rgba'
 
 class Resizer
   before: null

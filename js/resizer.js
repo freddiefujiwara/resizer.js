@@ -1,7 +1,7 @@
 (function() {
   var ImageRGBA, Resizer;
 
-  ImageRGBA = require('../js/image-rgba.js');
+  ImageRGBA = require('./image-rgba');
 
   Resizer = (function() {
     Resizer.prototype.before = null;

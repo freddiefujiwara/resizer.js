@@ -25,7 +25,7 @@ class ImageRGBA
     @
 
   pixcel:(x,y,data = null) ->
-    throw new Error "x and y should be in #{@width}x#{@height}" unless x < @width and y  < @height
+    throw new Error "x and y should be in #{@width}x#{@height}" unless x < @width and y < @height
     base = y * @width * 4 + x * 4
     unless null == data
       throw new Error('data should be an Array')    unless typeIsArray data

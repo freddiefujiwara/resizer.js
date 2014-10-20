@@ -14,13 +14,13 @@ handleError = (err) ->
 
 
 gulp.task 'unit-test', ->
-  gulp.src('tests/*-test.*', read: false)
+  gulp.src('tests/*-test.coffee', read: false)
     .pipe(mocha(reporter: 'spec', grep: yargs.argv.grep))
     .on 'error', handleError
 
 
 gulp.task 'forgiving-unit-test', ->
-  gulp.src('tests/*-test.*')
+  gulp.src('tests/*-test.coffee')
     .pipe(mocha(reporter: 'dot', compilers: 'coffee:coffee-script'))
     .on 'error', (err) ->
       if err.name is 'SyntaxError'
@@ -29,7 +29,7 @@ gulp.task 'forgiving-unit-test', ->
 
 
 gulp.task 'lint', ->
-  gulp.src(['./*.coffee', './lib/*', './tests/**/*'])
+  gulp.src(['./*.coffee', './lib/*.coffee', './tests/*-test.coffee'])
     .pipe(coffeelint(opt: {max_line_length: {value: 1024, level: 'ignore'}}))
     .pipe(coffeelint.reporter())
     .pipe(coffeelint.reporter('fail'))
@@ -37,7 +37,7 @@ gulp.task 'lint', ->
 
 
 gulp.task 'forgiving-lint', ->
-  gulp.src(['./*.coffee', './lib/*', './tests/**/*'])
+  gulp.src(['./*.coffee', './lib/*.coffee', './tests/*-test.coffee'])
     .pipe(coffeelint(opt: {max_line_length: {value: 1024, level: 'ignore'}}))
     .pipe(coffeelint.reporter())
     .on 'error', ->
@@ -64,8 +64,8 @@ gulp.task 'test', ['unit-test','lint']
 
 
 gulp.task 'tdd', ->
-  gulp.watch 'lib/*', ['forgiving-lint', 'forgiving-unit-test']
-  gulp.watch 'tests/*-test.*', ['forgiving-lint', 'forgiving-unit-test']
+  gulp.watch 'lib/*.coffee', ['forgiving-lint', 'forgiving-unit-test']
+  gulp.watch 'tests/*-test.coffee', ['forgiving-lint', 'forgiving-unit-test']
 
 
 gulp.task 'default', ['test']

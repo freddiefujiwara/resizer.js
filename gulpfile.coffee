@@ -6,6 +6,8 @@ watch      = require 'gulp-watch'
 yargs      = require 'yargs'
 concat     = require 'gulp-concat'
 uglify     = require 'gulp-uglify'
+browserify = require 'browserify'
+source = require 'vinyl-source-stream'
 
 
 handleError = (err) ->
@@ -51,6 +53,7 @@ gulp.task 'compile-coffee', ->
     .on 'error', ->
       @emit 'end'
 
+###
 gulp.task 'compile-js', ->
   compileFileName = 'resizer.min.js'
   gulp.src ['./js/*.js','./js/' + compileFileName]
@@ -59,8 +62,15 @@ gulp.task 'compile-js', ->
     .pipe gulp.dest('./js/')
     .on 'error', ->
       @emit 'end'
+###
+gulp.task 'compile-js', ->
+  browserify
+    entries: ['./js/resizer.js','./js/image-rgba.js']
+  .bundle()
+  .pipe source 'resizer.min.js'
+  .pipe gulp.dest "./js/"
 
-gulp.task 'test', ['unit-test','lint']
+gulp.task 'test', ['compile-coffee','unit-test','lint']
 
 
 gulp.task 'tdd', ->

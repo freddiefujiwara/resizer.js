@@ -1,0 +1,99 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>resizer.js</title>
+  <style type="text/css">
+/*<![CDATA[*/
+  <!--
+  html, body {
+    width:  100%;
+    height: 100%;
+    margin: 0px;
+  }
+  -->
+  /*]]>*/
+  </style>
+</head>
+
+<body onload="draw()">
+  <canvas id="mycanvas">
+    <div id="fallback">
+        You only see this message if your browser doesn't support
+        canvas.
+    </div>
+  </canvas>
+  <script type="text/javascript" src="./js/resizer.min.js"></script>
+  <script type="text/javascript">
+//<![CDATA[
+    var draw = function(){
+        var target  = {
+            width  : 230,
+            height : 230,
+        };
+        var canvas = document.getElementById('mycanvas');
+        var context = canvas.getContext('2d');
+        var originImage = new Image();
+        originImage.crossOrigin = "";
+        originImage.onload = function() {
+            //get image data
+            canvas.width  = originImage.width;
+            canvas.height = originImage.height;
+            context.drawImage(originImage, 0, 0);
+            try{
+              var imageData = context.getImageData(0,0,originImage.width,originImage.height);
+              canvas.style.display = "none";
+              //calculate scale
+              var scale = Math.max(target.width/originImage.width,target.height/originImage.height);
+              canvas.width = target.width  = parseInt(originImage.width  * scale);
+              canvas.height= target.height = parseInt(originImage.height * scale);
+              //resize
+              target.data  = context.getImageData(0,0,target.width,target.height);
+              for (var yTarget = 0; yTarget < target.height; yTarget++) {
+                  for (var xTarget = 0; xTarget < target.width; xTarget ++) {
+                      //calculate origin pixcel
+                      var xOrigin = parseInt(Math.round(xTarget / scale));
+                      var yOrigin = parseInt(Math.round(yTarget / scale));
+                      //convert origin to target
+                      if (xOrigin < originImage.width && yOrigin < originImage.height) {
+                          //red
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4]     
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4];
+                          //green
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4 + 1] 
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 1];
+                          //blue
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4 + 2] 
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 2];
+                          //alpha
+                          target.data.data[yTarget * target.width * 4 + xTarget * 4 + 3] 
+                              = imageData.data[yOrigin * originImage.width * 4 + xOrigin * 4 + 3];
+                      }
+                  }
+              }
+              //display
+              context.putImageData(target.data,0,0);
+            }catch(e){}
+            canvas.style.display = "block";
+        };
+        var isValidUrl = function(url) {
+          var pattern = new RegExp('^(https?:\\/\\/)?'+       // protocol
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+          '((\\d{1,3}\\.){3}\\d{1,3}))'+                      // OR ip (v4) address
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+                  // port and path
+          '(\\?[;&a-z\\d%_.~+=-]*)?');                        // query string
+          return !!pattern.test(url);
+        };
+        var hashData = window.location.hash.substr(1).split('#');
+        if(3 <= hashData.length){
+            target.width  = parseInt(hashData[1]);
+            target.height = parseInt(hashData[2]);
+        }
+        originImage.src = isValidUrl(hashData[0]) 
+            ? hashData[0]
+            : 'https://avatars3.githubusercontent.com/u/16923';
+      };
+      document.onhashchange = draw;
+  //]]>
+  </script>
+</body>
+</html>

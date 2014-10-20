@@ -49,7 +49,7 @@ gulp.task 'forgiving-lint', ->
 gulp.task 'compile-coffee', ->
   gulp.src './lib/*.coffee'
     .pipe coffee()
-    .pipe gulp.dest('./js/')
+    .pipe gulp.dest('js')
     .on 'error', ->
       @emit 'end'
 
